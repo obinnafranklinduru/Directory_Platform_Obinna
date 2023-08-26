@@ -6,8 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "start": "tsc && node build/src/server.js",
-    "build": "yarn install && tsc && node build/src/server.js"
+    "start": "node build/src/server.js",
+    "build": "yarn install && yarn build:server",
+    "build:server": "tsc"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
