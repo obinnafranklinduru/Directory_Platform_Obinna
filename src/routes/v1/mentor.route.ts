@@ -10,7 +10,7 @@ import {
   updateMentor,
   deleteMentorController,
 } from '../../controllers/mentor.controller';
-import { isAuthenticated } from '../../middlewares/auth.middleware';
+import { isAuthenticated, authenticateSuperAdmin } from '../../middlewares/auth.middleware';
 
 const router = express.Router();
 
@@ -21,12 +21,12 @@ router
 
 router
   .route('/:mentorId/categories')
-  .put(addMentorCategoryById)
-  .delete(removeMentorCategoryById);
+  .put(isAuthenticated, addMentorCategoryById)
+  .delete(isAuthenticated, removeMentorCategoryById);
 
 router
   .route('/:mentorId/avatar')
-  .put(addMentorAvatar);
+  .put(isAuthenticated, addMentorAvatar);
 
 router
   .route('/search')
@@ -35,7 +35,7 @@ router
 router
   .route('/:mentorId')
   .get(getMentorById)
-  .put(updateMentor)
-  .delete(deleteMentorController);
+  .put(isAuthenticated, updateMentor)
+  .delete(isAuthenticated, authenticateSuperAdmin, deleteMentorController);
 
 export default router;

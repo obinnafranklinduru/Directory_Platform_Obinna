@@ -22,7 +22,7 @@ const mentorSchema = new Schema({
         type: Types.ObjectId,
         ref: 'SocialLink'
     },
-    categories: [{ type: Types.ObjectId, ref: 'Category' }],
+    categories: [{ type: Types.ObjectId, ref: 'Category', autopopulate: true }],
 })
     
 mentorSchema.plugin(require('mongoose-autopopulate'));
