@@ -13,6 +13,9 @@ const swaggerDef = {
   },
   servers: [
     {
+      url: `https://directory-platform-api.cyclic.cloud`,
+    },
+    {
       url: `http://localhost:${PORT}`,
     },
   ],
