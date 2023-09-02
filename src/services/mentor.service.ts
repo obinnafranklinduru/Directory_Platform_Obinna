@@ -1,6 +1,6 @@
 import { MentorModel } from '../models/mentor.model';
-import { IMentorData, IMentorDocument } from '../interfaces/mentor.interface';
 import { CategoryModel } from '../models/category.model';
+import { IMentorData, IMentorDocument } from '../interfaces/mentor.interface';
 import ErrorResponse from '../utils/errorResponse';
 import { IDeleteResult } from '../interfaces/whitelistEmail.interface';
 
@@ -130,7 +130,13 @@ export class MentorService {
             }
 
             if (categories) {
-                const categoryIds = Array.isArray(categories) ? categories : [categories];
+                const categoryNames = Array.isArray(categories) ? categories : [categories];
+
+                const ExistedCategories = await CategoryModel.find({ name: { $in: categoryNames } }).exec();
+
+                if (!ExistedCategories || ExistedCategories.length === 0) throw new ErrorResponse('Categories not found', 404);
+
+                const categoryIds = ExistedCategories.map(category => category._id);
                 query.categories = { $in: categoryIds };
             }
 
@@ -150,6 +156,13 @@ export class MentorService {
             const mentor = await MentorModel.findById(mentorId).exec();
 
             if (!mentor) throw new ErrorResponse('mentor not found', 404);
+
+            if (mentorData.email) {
+                const email = mentorData.email.trim().toLowerCase();
+                const exists = await MentorModel.findOne({ email });
+
+                if(exists) throw new ErrorResponse('Email already exist', 400);
+            }
 
             for (const [key, value] of Object.entries(mentorData)) {
                 if (value !== undefined) {

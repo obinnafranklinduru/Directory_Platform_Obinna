@@ -85,7 +85,7 @@ export default router;
  *               $ref: '#/components/schemas/Error'
  * 
  *   delete:
- *     summary: Delete all admins (Super Admin only)
+ *     summary: Delete an admins (Super Admin only)
  *     tags: [Admins]
  *     security:
  *       - googleAuth: []

@@ -85,13 +85,15 @@ const uploadFile = async (filePath: Buffer, mimeType: string): Promise<IFileDocu
     }
 }
 
-const deleteFile = async (public_id: string): Promise<void> => {
+const deleteFile = async (public_id: string) => {
     try {
         // Delete from Cloudinary
-        await cloudinary.uploader.destroy(public_id);
+        const cloudinaryFileResult = await cloudinary.uploader.destroy(public_id);
 
         // Delete from Database
-        await FileModel.deleteOne({ public_id });
+        const fileModelFileResult = await FileModel.deleteOne({ public_id });
+
+        return { message: cloudinaryFileResult.result, deletedCount: fileModelFileResult.deletedCount };
 
     } catch (error) {
         throw new Error('An error occurred while deleting the file');

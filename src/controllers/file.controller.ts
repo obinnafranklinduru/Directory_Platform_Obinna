@@ -27,7 +27,9 @@ export async function uploadFileController(req: Request, res: Response, next: Ne
 export async function deleteFileController(req: Request, res: Response, next: NextFunction) {
     try {
         const { publicId } = req.params;
-        await deleteFile(publicId);
+        const result = await deleteFile(publicId);
+
+        if(result.deletedCount === 0) throw new Error(`Image ${result.message}`);
         
         return res.status(200).send({ success: true, message: 'Image deleted successfully' });
     } catch (error) {

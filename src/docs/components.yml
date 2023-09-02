@@ -47,12 +47,87 @@ components:
             avatar: https://lh3.googleusercontent.com/a/AAcHTtecH_6ZOOWXTALQXiC
             isSuperAdmin: false
 
+    MentorData:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - email
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+      example:
+        firstName: Jamie
+        lastName: Tyler
+        email: mp.soldier1988@gmail.com
+
+    MentorResponse:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar:
+          type: string
+        categories:
+          type: array
+          items:
+            type: object
+      example:
+        firstName: Jamie
+        lastName: Tyler
+        email: mp.soldier1988@gmail.com
+        avatar: null
+        categories: []
+
+    IDeleteResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+        deletedCount:
+          type: integer
+          format: int32
+
+    WhitelistEmailData:
+      type: object
+      properties:
+        _id:
+          type: string
+        email:
+          type: string
+          format: email
+      example:
+        _id: "234323442858573"
+        email: test@example.com
+
+    WhitelistEmail:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      example:
+        email: fake@example.com
+
     Category:
       type: object
       properties:
+        id:
+          type: string
         name:
           type: string
       example:
+        id: 5ebac534954b54139806c112
         name: graphic designer
 
     Error:

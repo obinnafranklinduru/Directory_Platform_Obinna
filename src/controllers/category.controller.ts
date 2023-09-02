@@ -1,9 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CategoryService } from '../services/category.service';
-import {
-    categoryCreationValidation,
-    categoryValidation
-} from '../validations/category.validation';
+import { categoryValidation } from '../validations/category.validation';
 
 const categoryService = new CategoryService()
 
@@ -12,7 +9,7 @@ export async function createCategory(req: Request, res: Response, next: NextFunc
     try {
         const { name } = req.body;
 
-        const categoryData = await categoryCreationValidation.parseAsync({ name });
+        const categoryData = await categoryValidation.parseAsync({ name });
 
         const category = await categoryService.createCategory(categoryData.name);
 
@@ -65,7 +62,7 @@ export async function updateCategory(req: Request, res: Response, next: NextFunc
         const { categoryId } = req.params;
         const { name } = req.body;
 
-        const categoryData = categoryValidation.parse({ name });
+        const categoryData = await categoryValidation.parseAsync({ name });
 
         const category = await categoryService.updateCategory(categoryId, categoryData.name);
 
@@ -76,6 +73,7 @@ export async function updateCategory(req: Request, res: Response, next: NextFunc
             }
         });
     } catch (error) {
+        console.log(error)
         next(error);
     }
 }

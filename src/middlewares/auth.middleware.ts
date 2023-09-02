@@ -21,7 +21,7 @@ export const authenticateSuperAdmin = async (req: Request, res: Response, next: 
     const admin = await adminService.getAdminByEmail(email);
 
     if (!admin || !admin.isSuperAdmin) {
-      return next(new ErrorResponse('Not authorized', 403))
+      return next(new ErrorResponse('Not authorized, Only super admin are allowed', 403))
     }
     next();
   } catch (error) {

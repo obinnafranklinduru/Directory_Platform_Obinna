@@ -13,7 +13,7 @@ const router = express.Router();
 router
   .route('/')
   .post(isAuthenticated, authenticateSuperAdmin, createCategory)
-  .get(isAuthenticated, authenticateSuperAdmin, getAllCategories);
+  .get(getAllCategories);
 
 router
   .route('/:categoryId')
@@ -71,8 +71,6 @@ export default router;
  *   get:
  *     summary: Get all categories
  *     tags: [Categories]
- *     security:
- *       - googleAuth: []
  *     parameters:
  *       - name: page
  *         in: query

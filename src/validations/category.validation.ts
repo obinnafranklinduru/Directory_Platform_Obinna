@@ -9,7 +9,7 @@ const isUniqueCategory = async (value: string) => {
     return !exists;
 }
 
-export const categoryCreationValidation = z.object({
+export const categoryValidation = z.object({
     name: z
         .string()
         .min(1)
@@ -17,11 +17,4 @@ export const categoryCreationValidation = z.object({
         .refine(async (value) => await isUniqueCategory(value), {
             message: 'Category must be unique',
         })
-});
-
-export const categoryValidation = z.object({
-    name: z
-        .string()
-        .min(1)
-        .max(255)
 });
